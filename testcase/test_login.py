@@ -7,8 +7,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 import unittest, time
-from page.login import login
-from page.quit import quit
+from Page.login import login
+from Page.quit import quit
 from Report import HTMLTestRunner
 class Login ( unittest.TestCase ):
     def setUp(self):
@@ -34,9 +34,10 @@ if __name__ == 'test_login':
     testunit = unittest.TestSuite ()
     testunit.addTest ( unittest.makeSuite ( Login.test_login ) )
     unittest.TextTestRunner ( verbosity=2 ).run ( testunit )
-    now = time.strftime ( "%Y-%m-%M-%H_%M_%S", time.localtime ( time.time () ) )
-    filename = "G:\\caolinlin\\zidonghua\\JRLtestdemo\\Report\\"
-    fp = file ( filename + u"金瑞龙" + now + ".html", 'wb' )
-    runner = HTMLTestRunner.HTMLTestRunner ( stream=fp, title=u"金瑞龙测试", description=u"测试结果" )
-    runner.run ( testunit )
-    fp.close ()
+'''   now = time.strftime ( "%Y-%m-%M-%H_%M_%S", time.localtime ( time.time () ) )
+    filename = "G:/test.html"
+    with open(filename, 'wb') as fp:
+        runner = HTMLTestRunner.HTMLTestRunner(stream=fp, title=u'测试', description=u'用例执行详情：')
+        runner.run(testunit)
+        fp.close ()
+'''
