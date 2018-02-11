@@ -21,10 +21,8 @@ class Login ( unittest.TestCase ):
     def test_login(self):
         driver = self.driver
         driver.get ( self.base_url + "/login" )
-        login ()
-
-    def test_001(self):
-        self.assertEqual ( u'账户总览', self.driver.title )
+        login ( self )
+        self.assertTrue ( self.base_url + 'front/account/home?login=1', self.driver.current_url )
         self.driver.quit ()
 
     @staticmethod
