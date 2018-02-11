@@ -9,7 +9,7 @@ from selenium.common.exceptions import NoSuchElementException
 import unittest, time
 from page.login import login
 from page.quit import quit
-
+from Report.HTMLTestRunner import HTMLTestRunner
 class Login ( unittest.TestCase ):
     def setUp(self):
         self.driver = webdriver.Chrome ()
@@ -37,3 +37,8 @@ class Login ( unittest.TestCase ):
 
 if __name__ == '__main__':
     unittest.TextTestRunner ( verbosity=2 ).run ( Login.suite () )
+    htmlpath = u"G:\\caolinlin\\zidonghua\\JRLtestdemo\\Report\\test_demo_Report.html"
+    fp = file ( htmlpath, "wb" )
+    runner = HTMLTestRunner ( stream=fp, title=u"金瑞龙测试", description=u"测试结果" )
+    runner.run ( Login.suite () )
+    fp.close ()
