@@ -67,6 +67,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 __author__ = "Wai Yip Tung"
 __version__ = "0.8.2"
 
+
 """
 Change History
 
@@ -90,7 +91,7 @@ Version in 0.7.1
 # TODO: simplify javascript using ,ore than 1 class in the class attribute?
 
 import datetime
-import io
+import StringIO
 import sys
 import time
 import unittest
@@ -110,7 +111,6 @@ from xml.sax import saxutils
 
 class OutputRedirector ( object ):
     """ Wrapper to redirect stdout or stderr """
-
     def __init__(self, fp):
         self.fp = fp
 
@@ -126,6 +126,7 @@ class OutputRedirector ( object ):
 
 stdout_redirector = OutputRedirector ( sys.stdout )
 stderr_redirector = OutputRedirector ( sys.stderr )
+
 
 
 # ----------------------------------------------------------------------
@@ -405,6 +406,8 @@ a.popup_link:hover {
     HEADING_ATTRIBUTE_TMPL = """<p class='attribute'><strong>%(name)s:</strong> %(value)s</p>
 """  # variables: (name, value)
 
+
+
     # ------------------------------------------------------------------------
     # Report
     #
@@ -455,6 +458,7 @@ a.popup_link:hover {
 </tr>
 """  # variables: (style, desc, count, Pass, fail, error, cid)
 
+
     REPORT_TEST_WITH_OUTPUT_TMPL = r"""
 <tr id='%(tid)s' class='%(Class)s'>
     <td class='%(style)s'><div class='testcase'>%(desc)s</div></td>
@@ -479,6 +483,7 @@ a.popup_link:hover {
 </tr>
 """  # variables: (tid, Class, style, desc, status)
 
+
     REPORT_TEST_NO_OUTPUT_TMPL = r"""
 <tr id='%(tid)s' class='%(Class)s'>
     <td class='%(style)s'><div class='testcase'>%(desc)s</div></td>
@@ -486,16 +491,18 @@ a.popup_link:hover {
 </tr>
 """  # variables: (tid, Class, style, desc, status)
 
+
     REPORT_TEST_OUTPUT_TMPL = r"""
 %(id)s: %(output)s
 """  # variables: (id, output)
+
+
 
     # ------------------------------------------------------------------------
     # ENDING
     #
 
     ENDING_TMPL = """<div id='ending'>&nbsp;</div>"""
-
 
 # -------------------- The end of the Template class -------------------
 
@@ -525,16 +532,18 @@ class _TestResult ( TestResult ):
         # )
         self.result = []
 
+
     def startTest(self, test):
         TestResult.startTest ( self, test )
         # just one buffer for both stdout and stderr
-        self.outputBuffer = io.StringIO ()
+        self.outputBuffer = StringIO.StringIO ()
         stdout_redirector.fp = self.outputBuffer
         stderr_redirector.fp = self.outputBuffer
         self.stdout0 = sys.stdout
         self.stderr0 = sys.stderr
         sys.stdout = stdout_redirector
         sys.stderr = stderr_redirector
+
 
     def complete_output(self):
         """
@@ -548,11 +557,13 @@ class _TestResult ( TestResult ):
             self.stderr0 = None
         return self.outputBuffer.getvalue ()
 
+
     def stopTest(self, test):
         # Usually one of addSuccess, addError or addFailure would have been called.
         # But there are some path in unittest that would bypass this.
         # We must disconnect stdout in stopTest(), which is guaranteed to be called.
         self.complete_output ()
+
 
     def addSuccess(self, test):
         self.success_count += 1
@@ -596,7 +607,6 @@ class _TestResult ( TestResult ):
 class HTMLTestRunner ( Template_mixin ):
     """
     """
-
     def __init__(self, stream=sys.stdout, verbosity=1, title=None, description=None):
         self.stream = stream
         self.verbosity = verbosity
@@ -611,14 +621,16 @@ class HTMLTestRunner ( Template_mixin ):
 
         self.startTime = datetime.datetime.now ()
 
+
     def run(self, test):
         "Run the given test case or test suite."
         result = _TestResult ( self.verbosity )
         test ( result )
         self.stopTime = datetime.datetime.now ()
         self.generateReport ( test, result )
-        print (sys.stderr, '\nTime Elapsed: %s' % (self.stopTime - self.startTime))
+        print >> sys.stderr, '\nTime Elapsed: %s' % (self.stopTime - self.startTime)
         return result
+
 
     def sortResult(self, result_list):
         # unittest does not seems to run in any particular order.
@@ -627,12 +639,13 @@ class HTMLTestRunner ( Template_mixin ):
         classes = []
         for n, t, o, e in result_list:
             cls = t.__class__
-            if not cls in rmap:
+            if not rmap.has_key ( cls ):
                 rmap[cls] = []
                 classes.append ( cls )
             rmap[cls].append ( (n, t, o, e) )
         r = [(cls, rmap[cls]) for cls in classes]
         return r
+
 
     def getReportAttributes(self, result):
         """
@@ -655,6 +668,7 @@ class HTMLTestRunner ( Template_mixin ):
             ('Status', status),
         ]
 
+
     def generateReport(self, test, result):
         report_attrs = self.getReportAttributes ( result )
         generator = 'HTMLTestRunner %s' % __version__
@@ -672,8 +686,10 @@ class HTMLTestRunner ( Template_mixin ):
         )
         self.stream.write ( output.encode ( 'utf8' ) )
 
+
     def _generate_stylesheet(self):
         return self.STYLESHEET_TMPL
+
 
     def _generate_heading(self, report_attrs):
         a_lines = []
@@ -689,6 +705,7 @@ class HTMLTestRunner ( Template_mixin ):
             description=saxutils.escape ( self.description ),
         )
         return heading
+
 
     def _generate_report(self, result):
         rows = []
@@ -735,6 +752,7 @@ class HTMLTestRunner ( Template_mixin ):
         )
         return report
 
+
     def _generate_report_test(self, rows, cid, tid, n, t, o, e):
         # e.g. 'pt1.1', 'ft1.1', etc
         has_output = bool ( o or e )
@@ -748,13 +766,13 @@ class HTMLTestRunner ( Template_mixin ):
         if isinstance ( o, str ):
             # TODO: some problem with 'string_escape': it escape \n and mess up formating
             # uo = unicode(o.encode('string_escape'))
-            uo = o
+            uo = o.decode ( 'latin-1' )
         else:
             uo = o
         if isinstance ( e, str ):
             # TODO: some problem with 'string_escape': it escape \n and mess up formating
             # ue = unicode(e.encode('string_escape'))
-            ue = e
+            ue = e.decode ( 'latin-1' )
         else:
             ue = e
 
@@ -791,7 +809,6 @@ class TestProgram ( unittest.TestProgram ):
     A variation of the unittest.TestProgram. Please refer to the base
     class for command line parameters.
     """
-
     def runTests(self):
         # Pick HTMLTestRunner as the default test runner.
         # base class's testRunner parameter is not useful because it means
@@ -799,7 +816,6 @@ class TestProgram ( unittest.TestProgram ):
         if self.testRunner is None:
             self.testRunner = HTMLTestRunner ( verbosity=self.verbosity )
         unittest.TestProgram.runTests ( self )
-
 
 main = TestProgram
 
