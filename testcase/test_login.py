@@ -8,7 +8,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 import unittest, time
 from page.login import login
-
+from page.quit import quit
 
 class Login ( unittest.TestCase ):
     def setUp(self):
@@ -23,7 +23,11 @@ class Login ( unittest.TestCase ):
         driver.get ( self.base_url + "/login" )
         login ( self )
         self.assertTrue ( self.base_url + 'front/account/home?login=1', self.driver.current_url )
+        quit ( self )
+
+    def tearDown(self):
         self.driver.quit ()
+        self.assertEqual ( [], self.verificationErrors )
 
     @staticmethod
     def suite():
