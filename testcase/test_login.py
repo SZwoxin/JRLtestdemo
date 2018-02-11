@@ -9,7 +9,7 @@ from selenium.common.exceptions import NoSuchElementException
 import unittest, time
 from page.login import login
 from page.quit import quit
-from Report.HTMLTestRunner import HTMLTestRunner
+from Report import HTMLTestRunner
 class Login ( unittest.TestCase ):
     def setUp(self):
         self.driver = webdriver.Chrome ()
@@ -29,16 +29,14 @@ class Login ( unittest.TestCase ):
         self.driver.quit ()
         self.assertEqual ( [], self.verificationErrors )
 
-    @staticmethod
-    def suite():
-        suit = unittest.TestSuite ( unittest.makeSuite ( Login ) )
-        return suit
 
-
-if __name__ == '__main__':
-    unittest.TextTestRunner ( verbosity=2 ).run ( Login.suite () )
-    htmlpath = u"G:\\caolinlin\\zidonghua\\JRLtestdemo\\Report\\test_demo_Report.html"
-    fp = file ( htmlpath, "wb" )
-    runner = HTMLTestRunner ( stream=fp, title=u"金瑞龙测试", description=u"测试结果" )
-    runner.run ( Login.suite () )
+if __name__ == 'test_login':
+    testunit = unittest.TestSuite ()
+    testunit.addTest ( unittest.makeSuite ( Login.test_login ) )
+    unittest.TextTestRunner ( verbosity=2 ).run ( testunit )
+    now = time.strftime ( "%Y-%m-%M-%H_%M_%S", time.localtime ( time.time () ) )
+    filename = "G:\\caolinlin\\zidonghua\\JRLtestdemo\\Report\\"
+    fp = file ( filename + u"金瑞龙" + now + ".html", 'wb' )
+    runner = HTMLTestRunner.HTMLTestRunner ( stream=fp, title=u"金瑞龙测试", description=u"测试结果" )
+    runner.run ( testunit )
     fp.close ()
