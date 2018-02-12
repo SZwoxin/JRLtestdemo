@@ -1,14 +1,14 @@
 # -*- coding:utf-8 -*-
 # Aothor:Lin
 from selenium import webdriver
-import sys, xlrd
-
+import sys, ddt
 reload ( sys )
 import unittest
 from Page.login import login
 from Page.quit import quit
 from Report import HTMLTestRunner
 from Model.Test_Data import login_data
+
 class Login ( unittest.TestCase ):
     def setUp(self):
         self.driver = webdriver.Chrome ()
@@ -21,7 +21,7 @@ class Login ( unittest.TestCase ):
     def test_login(self):
         driver = self.driver
         driver.get ( self.base_url + "/login" )
-        login ( self, login_data )
+        login ( self )
         self.assertTrue ( self.base_url + 'front/account/home?login=1', self.driver.current_url )
         quit ( self )
 
