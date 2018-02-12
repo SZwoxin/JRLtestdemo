@@ -2,17 +2,17 @@
 # Aothor:Lin
 
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
-from selenium.common.exceptions import NoSuchElementException
-import unittest, time
+import sys, xlrd
+
+reload ( sys )
+import unittest
 from Page.login import login
 from Page.quit import quit
 from Report import HTMLTestRunner
 class Login ( unittest.TestCase ):
     def setUp(self):
         self.driver = webdriver.Chrome ()
+        self.driver.maximize_window ()
         self.driver.implicitly_wait ( 30 )
         self.base_url = ('http://pctest.ruilongjin.com')
         self.verificationErrors = []
