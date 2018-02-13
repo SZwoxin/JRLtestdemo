@@ -7,7 +7,6 @@ import unittest
 from Page.login import login
 from Page.quit import quit
 from Report import HTMLTestRunner
-from Model.Test_Data import login_data
 
 class Login ( unittest.TestCase ):
     def setUp(self):
