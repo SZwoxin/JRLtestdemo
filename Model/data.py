@@ -30,11 +30,14 @@ class ExcelUtil:
                     s[self.keys[x]] = values[x]
                 r.append ( s )
                 j += 1
-            return json.dumps ( r ).decode ( "unicode-escape" )
+            # return json.dumps ( r ).decode ( "unicode-escape" )
+            return r
 
 
+'''
 if __name__ == "__main__":
     filePath = (u'G:\\caolinlin\\zidonghua\\JRLtestdemo\\Data-Driven\\Login_data.xlsx')
     sheetName = "Sheet1"
     data = ExcelUtil ( filePath, sheetName )
     print data.dict_data ()
+'''
