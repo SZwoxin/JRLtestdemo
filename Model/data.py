@@ -3,7 +3,7 @@
 
 # coding:utf-8
 import xlrd
-
+import json
 
 class ExcelUtil:
     def __init__(self, excel_path, sheet_name):
@@ -30,7 +30,7 @@ class ExcelUtil:
                     s[self.keys[x]] = values[x]
                 r.append ( s )
                 j += 1
-            return r
+            return json.dumps ( r ).decode ( "unicode-escape" )
 
 
 if __name__ == "__main__":
