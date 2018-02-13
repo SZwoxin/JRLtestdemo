@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 # Aothor:Lin
 from selenium import webdriver
-import ddt
+import ddt, time
 import unittest
 from Page.login import login
 from Page.quit import quit
@@ -39,14 +39,14 @@ class Login ( unittest.TestCase ):
         self.assertEqual ( [], self.verificationErrors )
 
 
-if __name__ == 'test_login':
+if __name__ == '__main__':
     testunit = unittest.TestSuite ()
-    testunit.addTest ( unittest.makeSuite ( Login.test_login ) )
-    unittest.TextTestRunner ( verbosity=2 ).run ( testunit )
-'''   now = time.strftime ( "%Y-%m-%M-%H_%M_%S", time.localtime ( time.time () ) )
-    filename = "G:/test.html"
+    testunit.addTest ( unittest.makeSuite ( Login ) )
+    # unittest.TextTestRunner ( verbosity=2 ).run ( testunit )
+    now = time.strftime ( "%Y-%m-%M-%H_%M_%S", time.localtime ( time.time () ) )
+    filename = u"G:\\test.html"
+    fp = file ( filename, 'wb' )
     with open(filename, 'wb') as fp:
         runner = HTMLTestRunner.HTMLTestRunner(stream=fp, title=u'测试', description=u'用例执行详情：')
         runner.run(testunit)
         fp.close ()
-'''
