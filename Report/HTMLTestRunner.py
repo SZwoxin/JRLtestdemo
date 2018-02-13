@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 A TestRunner for use with the Python unit testing framework. It
 generates a HTML report to show the result at a glance.
@@ -65,11 +66,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # URL: http://tungwaiyip.info/software/HTMLTestRunner.html
 
 __author__ = "Wai Yip Tung"
-__version__ = "0.8.2"
+__version__ = "0.8.3"
 
 
 """
 Change History
+Version 0.8.3
+* Use Bootstrap (Zhang Xin)
+* Change to Chinese (Zhang Xin)
 
 Version 0.8.2
 * Show output inline instead of popup window (Viorel Lupu).
@@ -173,9 +177,9 @@ class Template_mixin ( object ):
     """
 
     STATUS = {
-        0: 'pass',
-        1: 'fail',
-        2: 'error',
+        0: u'通过',
+        1: u'失败',
+        2: u'错误',
     }
 
     DEFAULT_TITLE = 'Unit Test Report'
@@ -192,6 +196,7 @@ class Template_mixin ( object ):
     <meta name="generator" content="%(generator)s"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     %(stylesheet)s
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <script language="javascript" type="text/javascript"><!--
@@ -288,11 +293,13 @@ function showOutput(id, name) {
 }
 */
 --></script>
+<div id="div_base">
 
 %(heading)s
 %(report)s
 %(ending)s
 
+</div>
 </body>
 </html>
 """
@@ -309,7 +316,7 @@ function showOutput(id, name) {
 <style type="text/css" media="screen">
 body        { font-family: verdana, arial, helvetica, sans-serif; font-size: 80%; }
 table       { font-size: 100%; }
-pre         { }
+pre         { white-space: pre-wrap;word-wrap: break-word; }
 
 /* -- heading ---------------------------------------------------------------------- */
 h1 {
@@ -327,8 +334,8 @@ h1 {
 }
 
 .heading .description {
-    margin-top: 4ex;
-    margin-bottom: 6ex;
+    margin-top: 2ex;
+    margin-bottom: 3ex;
 }
 
 /* -- css div popup ------------------------------------------------------------------------ */
@@ -350,7 +357,7 @@ a.popup_link:hover {
     font-family: "Lucida Console", "Courier New", Courier, monospace;
     text-align: left;
     font-size: 8pt;
-    width: 500px;
+    /* width: 500px;*/
 }
 
 }
@@ -360,25 +367,19 @@ a.popup_link:hover {
     margin-bottom: 1ex;
 }
 #result_table {
-    width: 80%;
-    border-collapse: collapse;
-    border: 1px solid #777;
+    width: 99%;
 }
 #header_row {
     font-weight: bold;
     color: white;
     background-color: #777;
 }
-#result_table td {
-    border: 1px solid #777;
-    padding: 2px;
-}
 #total_row  { font-weight: bold; }
-.passClass  { background-color: #6c6; }
-.failClass  { background-color: #c60; }
-.errorClass { background-color: #c00; }
+.passClass  { background-color: #74A474; }
+.failClass  { background-color: #FDD283; }
+.errorClass { background-color: #FF6600; }
 .passCase   { color: #6c6; }
-.failCase   { color: #c60; font-weight: bold; }
+.failCase   { color: #FF6600; font-weight: bold; }
 .errorCase  { color: #c00; font-weight: bold; }
 .hiddenRow  { display: none; }
 .testcase   { margin-left: 2em; }
@@ -388,6 +389,15 @@ a.popup_link:hover {
 #ending {
 }
 
+#div_base {
+            position:absolute;
+            top:0%;
+            left:5%;
+            right:5%;
+            width: auto;
+            height: auto;
+            margin: -15px 0 0 0;
+}
 </style>
 """
 
@@ -395,11 +405,11 @@ a.popup_link:hover {
     # Heading
     #
 
-    HEADING_TMPL = """<div class='heading'>
+    HEADING_TMPL = """<div class='page-header'>
 <h1>%(title)s</h1>
 %(parameters)s
-<p class='description'>%(description)s</p>
 </div>
+<p class='description'>%(description)s</p>
 
 """  # variables: (title, parameters, description)
 
@@ -412,13 +422,14 @@ a.popup_link:hover {
     # Report
     #
 
-    REPORT_TMPL = """
-<p id='show_detail_line'>Show
-<a href='javascript:showCase(0)'>Summary</a>
-<a href='javascript:showCase(1)'>Failed</a>
-<a href='javascript:showCase(2)'>All</a>
-</p>
-<table id='result_table'>
+    REPORT_TMPL = u"""
+<div class="btn-group btn-group-sm">
+<button class="btn btn-default" onclick='javascript:showCase(0)'>总结</button>
+<button class="btn btn-default" onclick='javascript:showCase(1)'>失败</button>
+<button class="btn btn-default" onclick='javascript:showCase(2)'>全部</button>
+</div>
+<p></p>
+<table id='result_table' class="table table-bordered">
 <colgroup>
 <col align='left' />
 <col align='right' />
@@ -428,16 +439,16 @@ a.popup_link:hover {
 <col align='right' />
 </colgroup>
 <tr id='header_row'>
-    <td>Test Group/Test case</td>
-    <td>Count</td>
-    <td>Pass</td>
-    <td>Fail</td>
-    <td>Error</td>
-    <td>View</td>
+    <td>测试套件/测试用例</td>
+    <td>总数</td>
+    <td>通过</td>
+    <td>失败</td>
+    <td>错误</td>
+    <td>查看</td>
 </tr>
 %(test_list)s
 <tr id='total_row'>
-    <td>Total</td>
+    <td>总计</td>
     <td>%(count)s</td>
     <td>%(Pass)s</td>
     <td>%(fail)s</td>
@@ -447,14 +458,14 @@ a.popup_link:hover {
 </table>
 """  # variables: (test_list, count, Pass, fail, error)
 
-    REPORT_CLASS_TMPL = r"""
+    REPORT_CLASS_TMPL = u"""
 <tr class='%(style)s'>
     <td>%(desc)s</td>
     <td>%(count)s</td>
     <td>%(Pass)s</td>
     <td>%(fail)s</td>
     <td>%(error)s</td>
-    <td><a href="javascript:showClassDetail('%(cid)s',%(count)s)">Detail</a></td>
+    <td><a href="javascript:showClassDetail('%(cid)s',%(count)s)">详情</a></td>
 </tr>
 """  # variables: (style, desc, count, Pass, fail, error, cid)
 
@@ -655,17 +666,17 @@ class HTMLTestRunner ( Template_mixin ):
         startTime = str ( self.startTime )[:19]
         duration = str ( self.stopTime - self.startTime )
         status = []
-        if result.success_count: status.append ( 'Pass %s' % result.success_count )
-        if result.failure_count: status.append ( 'Failure %s' % result.failure_count )
-        if result.error_count:   status.append ( 'Error %s' % result.error_count )
+        if result.success_count: status.append ( u'通过 %s' % result.success_count )
+        if result.failure_count: status.append ( u'失败 %s' % result.failure_count )
+        if result.error_count:   status.append ( u'错误 %s' % result.error_count )
         if status:
             status = ' '.join ( status )
         else:
             status = 'none'
         return [
-            ('Start Time', startTime),
-            ('Duration', duration),
-            ('Status', status),
+            (u'开始时间', startTime),
+            (u'运行时长', duration),
+            (u'状态', status),
         ]
 
 
