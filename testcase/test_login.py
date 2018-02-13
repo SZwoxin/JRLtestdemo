@@ -1,13 +1,22 @@
 # -*- coding:utf-8 -*-
 # Aothor:Lin
 from selenium import webdriver
-import sys, ddt
-reload ( sys )
+import ddt
 import unittest
 from Page.login import login
 from Page.quit import quit
+from Model.data import ExcelUtil
 from Report import HTMLTestRunner
 
+filePath = (u'G:\\caolinlin\\zidonghua\\JRLtestdemo\\Data-Driven\\Login_data.xlsx')
+sheetName = "Sheet1"
+data = ExcelUtil ( filePath, sheetName )
+testData = data.dict_data ()
+
+
+# print testData
+
+@ddt.ddt
 class Login ( unittest.TestCase ):
     def setUp(self):
         self.driver = webdriver.Chrome ()
@@ -17,10 +26,11 @@ class Login ( unittest.TestCase ):
         self.verificationErrors = []
         self.accept_next_alert = True
 
-    def test_login(self):
+    @ddt.data ( *testData )
+    def test_login(self, data):
         driver = self.driver
         driver.get ( self.base_url + "/login" )
-        login ( self )
+        login ( self, data["name"], data["pswd"] )
         self.assertTrue ( self.base_url + 'front/account/home?login=1', self.driver.current_url )
         quit ( self )
 

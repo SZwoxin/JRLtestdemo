@@ -5,6 +5,7 @@
 import xlrd
 import json
 
+
 class ExcelUtil:
     def __init__(self, excel_path, sheet_name):
         self.data = xlrd.open_workbook ( excel_path )
