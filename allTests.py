@@ -1,10 +1,12 @@
 # -*- coding:utf-8 -*-
 # Aothor:Lin
-import unittest, os, sys, HTMLTestRunner, time
-
+import unittest, os, time
+from Report import HTMLTestRunner
 
 def suite():
-    test_dir = "G:/caolinlin/zidonghua/RLtestdemo/Testcase"
+    test_dir = os.path.join ( os.getcwd (), "Testcase" )
+    # test_dir =path
+    # test_dir ="G:\\caolinlin\\zidonghua\\JRLtestdemo\\Testcase"
     dir_case = unittest.defaultTestLoader.discover (
         test_dir,
         pattern="test_*.py",
