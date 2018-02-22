@@ -40,27 +40,40 @@ def runAutomation():
 # 定义发送邮件
 def sentmail(file_new):
     # 登录邮箱
-    mail_from = '****@qq.com'
+    mail_from = '***@qq.com'
     # 收件邮箱
-    mail_to = ['*****@qq.com']
+    mail_to = ['***@qq.com']
     # 登录授权码
-    _pswd = '*****'
+    _pswd = '***'
     # 定义正文
     f = open ( file_new, 'rb' )
     mail_body = f.read ()
     f.close ()
+
+    msg = MIMEMultipart ()
     # 定义标题
-    msg = MIMEText ( mail_body, _subtype='html', _charset='utf-8' )
+    # msgg = MIMEText ( mail_body, _subtype='html', _charset='utf-8' )
     msg['Subject'] = u'自动化测试报告'
-    #   定义发送时间
+    # 定义发送时间
     msg['date'] = time.strftime ( '%a, %d %b %Y %H:%M:%S %z' )
+    # 定义发送人
     msg['from'] = mail_from
+    # 定义接收人
     msg['to'] = ";".join ( mail_to )
+    # 正文
+    body = MIMEText ( mail_body, _subtype='html', _charset='utf-8' )
+    msg.attach ( body )
+    # 附件
+    att = MIMEText ( mail_body, _subtype='html', _charset='utf-8' )
+    att["Content-Type"] = "application/octet-stream"
+    att["Content-Disposition"] = 'attachment;filename = "test_report.html'
+    msg.attach ( att)
     # smtp = smtplib.SMTP ()
     # 定义SSL第三方QQ登录方式
     s = smtplib.SMTP_SSL ( 'smtp.qq.com', 465 )
     # 登录信息
     s.login ( mail_from, _pswd )
+    # 执行发送
     s.sendmail ( mail_from, mail_to, msg.as_string () )
     s.quit ()
     print u'邮件发送成功!'
