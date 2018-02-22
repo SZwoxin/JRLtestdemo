@@ -38,8 +38,8 @@ def runAutomation():
 
 
 def sentmail(file_new):
-    mail_from = '469551994@qq.com'
-    mail_to = '1243054080@qq.com'
+    mail_from = '输入登录邮箱'
+    mail_to = '输入发送邮箱'
     _pswd = '输入授权码'
     f = open ( file_new, 'rb' )
     mail_body = f.read ()
