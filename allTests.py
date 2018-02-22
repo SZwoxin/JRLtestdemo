@@ -37,15 +37,14 @@ def runAutomation():
     runner.run ( suite () )
 
 
-'''
 # 定义发送邮件
 def sentmail(file_new):
     # 登录邮箱
-    mail_from = '输入登录邮箱'
+    mail_from = '****@qq.com'
     # 收件邮箱
-    mail_to = '输入发送邮箱'
+    mail_to = ['*****@qq.com']
     # 登录授权码
-    _pswd = '输入授权码'
+    _pswd = '*****'
     # 定义正文
     f = open ( file_new, 'rb' )
     mail_body = f.read ()
@@ -55,6 +54,8 @@ def sentmail(file_new):
     msg['Subject'] = u'自动化测试报告'
     #   定义发送时间
     msg['date'] = time.strftime ( '%a, %d %b %Y %H:%M:%S %z' )
+    msg['from'] = mail_from
+    msg['to'] = ";".join ( mail_to )
     # smtp = smtplib.SMTP ()
     # 定义SSL第三方QQ登录方式
     s = smtplib.SMTP_SSL ( 'smtp.qq.com', 465 )
@@ -74,19 +75,7 @@ def sendreport():
     file_new = os.path.join ( result_dir, lists[-1] )
     print file_new
     sentmail ( file_new )
-'''
-
-s = yagmail.SMTP ( user='469551994@qq.com', password='ywatuonwwfefcbcd', host='smtp.qq.com' )
-
-result_dir = 'G:\\caolinlin\\zidonghua\\JRLtestdemo\\Report'
-lists = os.listdir ( result_dir )
-lists.sort ( key=lambda fn: os.path.getmtime ( result_dir + "\\" + fn ) if not os.path.isdir (
-    result_dir + "\\" + fn ) else 0 )
-
-contents = ['这是自动化测试报告，请查看附件！']
-
-s.send ( '1243054080@qq.com', 'subject', contents, lists[-1] )
 
 if __name__ == '__main__':
     runAutomation ()
-    # sendreport ()
+    sendreport ()
