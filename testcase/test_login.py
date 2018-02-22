@@ -19,13 +19,14 @@ testData = data.dict_data ()
 
 @ddt.ddt
 class Login ( unittest.TestCase ):
-    def setUp(self):
-        self.driver = webdriver.Chrome ()
-        self.driver.maximize_window ()
-        self.driver.implicitly_wait ( 30 )
-        self.base_url = ('http://pctest.ruilongjin.com')
-        self.verificationErrors = []
-        self.accept_next_alert = True
+    @classmethod
+    def setUpClass(cls):
+        cls.driver = webdriver.Chrome ()
+        cls.driver.maximize_window ()
+        cls.driver.implicitly_wait ( 30 )
+        cls.base_url = ('http://pctest.ruilongjin.com')
+        cls.verificationErrors = []
+        cls.accept_next_alert = True
 
     @ddt.data ( *testData )
     def test_login(self, data):
@@ -35,9 +36,10 @@ class Login ( unittest.TestCase ):
         self.assertTrue ( self.base_url + 'front/account/home?login=1', self.driver.current_url )
         quit ( self )
 
-    def tearDown(self):
-        self.driver.quit ()
-        self.assertEqual ( [], self.verificationErrors )
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit ()
+        # cls.assertEqual ( [],cls.verificationErrors)
 
 
 if __name__ == '__main__':
