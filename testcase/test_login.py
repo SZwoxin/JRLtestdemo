@@ -1,12 +1,13 @@
 # -*- coding:utf-8 -*-
 # Aothor:Lin
-from selenium import webdriver
-import ddt, time
 import unittest
+
+import ddt
+from selenium import webdriver
+
+from Model.data import ExcelUtil
 from Page.login import login
 from Page.quit import quit
-from Model.data import ExcelUtil
-from Report import HTMLTestRunner
 
 filePath = (u'G:\\caolinlin\\zidonghua\\JRLtestdemo\\Data-Driven\\Login_data.xlsx')
 sheetName = "Sheet1"
