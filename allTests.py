@@ -40,13 +40,13 @@ def runAutomation():
 # 定义发送邮件
 def sentmail(file_new):
     # 登录邮箱
-    mail_from = '***@qq.com'
+    mail_from = 'caolinlin@ruilongjin.com'
     # 收件邮箱
-    mail_to = ['***@qq.com']
+    mail_to = ['caolinlin@ruilongjin.com']
     # 登录授权码
-    _pswd = '***'
+    _pswd = '****'
     # 邮箱服务器
-    mail_server = 'smtp.qq.com'
+    mail_server = 'smtp.exmail.qq.com'
     # 邮箱端口
     port = 465
     # 定义正文
@@ -71,8 +71,9 @@ def sentmail(file_new):
     att = MIMEText ( mail_body, _subtype='html', _charset='utf-8')
     att["Content-Type"] = "application/octet-stream"
     att["Content-Disposition"] = 'attachment;filename = "test_report.html'
-    msg.attach ( att)
+    msg.attach ( att )
     # smtp = smtplib.SMTP ()
+    #smtp.connect(mail_server,port)
     # 定义SSL第三方QQ登录方式
     s = smtplib.SMTP_SSL ( mail_server, port )
     # 登录信息
