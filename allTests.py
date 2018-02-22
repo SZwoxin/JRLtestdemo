@@ -40,9 +40,9 @@ def runAutomation():
 # 定义发送邮件
 def sentmail(file_new):
     # 登录邮箱
-    mail_from = 'caolinlin@ruilongjin.com'
+    mail_from = '***@163.com'
     # 收件邮箱
-    mail_to = ['caolinlin@ruilongjin.com']
+    mail_to = ['***@163.com']
     # 登录授权码
     _pswd = '****'
     # 邮箱服务器
