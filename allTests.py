@@ -45,6 +45,10 @@ def sentmail(file_new):
     mail_to = ['***@qq.com']
     # 登录授权码
     _pswd = '***'
+    # 邮箱服务器
+    mail_server = 'smtp.qq.com'
+    # 邮箱端口
+    port = 465
     # 定义正文
     f = open ( file_new, 'rb' )
     mail_body = f.read ()
@@ -59,18 +63,18 @@ def sentmail(file_new):
     # 定义发送人
     msg['from'] = mail_from
     # 定义接收人
-    msg['to'] = ";".join ( mail_to )
+    msg['to'] = ";".join ( mail_to)
     # 正文
     body = MIMEText ( mail_body, _subtype='html', _charset='utf-8' )
-    msg.attach ( body )
+    msg.attach ( body)
     # 附件
-    att = MIMEText ( mail_body, _subtype='html', _charset='utf-8' )
+    att = MIMEText ( mail_body, _subtype='html', _charset='utf-8')
     att["Content-Type"] = "application/octet-stream"
     att["Content-Disposition"] = 'attachment;filename = "test_report.html'
     msg.attach ( att)
     # smtp = smtplib.SMTP ()
     # 定义SSL第三方QQ登录方式
-    s = smtplib.SMTP_SSL ( 'smtp.qq.com', 465 )
+    s = smtplib.SMTP_SSL ( mail_server, port )
     # 登录信息
     s.login ( mail_from, _pswd )
     # 执行发送
