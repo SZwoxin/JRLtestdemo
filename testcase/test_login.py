@@ -10,7 +10,7 @@ from Page.login import login
 from Page.quit import quit
 from Model.logger import Log
 
-log = Log ()
+# log = Log ()
 
 filePath = (u'G:\\caolinlin\\zidonghua\\JRLtestdemo\\Data-Driven\\Login_data.xlsx')
 sheetName = "Sheet1"
@@ -31,25 +31,27 @@ class Login ( unittest.TestCase ):
         cls.verificationErrors = []
         cls.accept_next_alert = True
 
-    @ddt.data ( *testData )
-    def test_login(self, data):
-        log.info ( u"---测试开始----" )
-        driver = self.driver
-        log.info ( u"---输入账号----" )
-        driver.get ( self.base_url + "/login" )
-        log.info ( u"---输入密码----" )
-        login ( self, data["name"], data["pswd"] )
-        log.info ( u"---判断登录后的URL是否与登录前相同----" )
-        self.assertTrue ( self.base_url + 'front/account/home?login=1', self.driver.current_url )
-        log.info ( u"---退出登录----" )
-        quit ( self )
-        log.info ( u"---测试结束----" )
-
     @classmethod
     def tearDownClass(cls):
         cls.driver.quit ()
         cls.verificationErrors = []
         # cls.assertEqual ( [],cls.verificationErrors)
+
+    @ddt.data ( *testData )
+    def test_login(self, data):
+        #log.info ( u"---测试开始----" )
+        driver = self.driver
+        #log.info ( u"---输入账号----" )
+        driver.get ( self.base_url + "/login" )
+        #log.info ( u"---输入密码----" )
+        login ( self, data["name"], data["pswd"] )
+        #log.info ( u"---判断登录后的URL是否与登录前相同----" )
+        self.assertTrue ( self.base_url + 'front/account/home?login=1', self.driver.current_url )
+        #log.info ( u"---退出登录----" )
+        quit ( self )
+        #log.info ( u"---测试结束----" )
+
+
 
 
 if __name__ == '__main__':

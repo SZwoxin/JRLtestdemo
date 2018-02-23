@@ -29,6 +29,8 @@ def runAutomation():
     runner = HTMLTestRunner.HTMLTestRunner (
         stream=fp,
         title=u"自动化测试报告",
-        description=u"用例执行情况："
+        description=u"用例执行情况：",
+        verbosity=2,
+        retry=2
     )
     runner.run ( suite () )
