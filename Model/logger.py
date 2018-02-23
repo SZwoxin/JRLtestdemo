@@ -24,10 +24,10 @@ class Log:
         fh.setFormatter ( self.formatter )
         self.logger.addHandler ( fh )
         # 创建一个StreamHandler,用于输出到控制台
-        # ch = logging.StreamHandler ()
-        # ch.setLevel ( logging.DEBUG )
-        # ch.setFormatter ( self.formatter )
-        # self.logger.addHandler ( ch )
+        ch = logging.StreamHandler ()
+        ch.setLevel ( logging.DEBUG )
+        ch.setFormatter ( self.formatter )
+        self.logger.addHandler ( ch )
         if level == 'info':
             self.logger.info ( message )
         elif level == 'debug':
@@ -36,11 +36,11 @@ class Log:
             self.logger.warning ( message )
         elif level == 'error':
             self.logger.error ( message )
-            # 这两行代码是为了避免日志输出重复问题
-            self.logger.removeHandler ( ch )
-            self.logger.removeHandler ( fh )
-            # 关闭打开的文件
-            fh.close ()
+        # 这两行代码是为了避免日志输出重复问题
+        self.logger.removeHandler ( ch )
+        self.logger.removeHandler ( fh )
+        # 关闭打开的文件
+        fh.close ()
 
     def debug(self, message):
         self.__console ( 'debug', message )
@@ -54,9 +54,8 @@ class Log:
     def error(self, message):
         self.__console ( 'error', message )
 
-
-if __name__ == "__main__":
-    log = Log ()
+        # if __name__ == "__main__":
+        # log = Log ()
     # log.info ( "---测试开始----" )
     # log.info ( "输入密码" )
     # log.warning ( "----测试结束----" )

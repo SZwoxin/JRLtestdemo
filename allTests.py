@@ -7,6 +7,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 import yagmail
 
+
 # 定义测试报告路径
 def suite():
     test_dir = os.path.join ( os.getcwd (), "Testcase" )
@@ -20,12 +21,12 @@ def suite():
     return dir_case
 
 
-#生成测试报告时间
+# 生成测试报告时间
 def getNowTime():
     return time.strftime ( "%Y-%m-%d_%H-%M-%S", time.localtime ( time.time () ) )
 
 
-#定义测试报告存放路径与报告名称
+# 定义测试报告存放路径与报告名称
 def runAutomation():
     filename = u"G:\\caolinlin\\zidonghua\\JRLtestdemo\\Report\\" + getNowTime () + "_TestReort.html"
     fp = file ( filename, 'wb' )
@@ -40,9 +41,9 @@ def runAutomation():
 # 定义发送邮件
 def sentmail(file_new):
     # 登录邮箱
-    mail_from = '***@163.com'
+    mail_from = '****'
     # 收件邮箱
-    mail_to = ['***@163.com']
+    mail_to = ['****']
     # 登录授权码
     _pswd = '****'
     # 邮箱服务器
@@ -63,17 +64,17 @@ def sentmail(file_new):
     # 定义发送人
     msg['from'] = mail_from
     # 定义接收人
-    msg['to'] = ";".join ( mail_to)
+    msg['to'] = ";".join ( mail_to )
     # 正文
     body = MIMEText ( mail_body, _subtype='html', _charset='utf-8' )
-    msg.attach ( body)
+    msg.attach ( body )
     # 附件
-    att = MIMEText ( mail_body, _subtype='html', _charset='utf-8')
+    att = MIMEText ( mail_body, _subtype='html', _charset='utf-8' )
     att["Content-Type"] = "application/octet-stream"
     att["Content-Disposition"] = 'attachment;filename = "test_report.html'
     msg.attach ( att )
     # smtp = smtplib.SMTP ()
-    #smtp.connect(mail_server,port)
+    # smtp.connect(mail_server,port)
     # 定义SSL第三方QQ登录方式
     s = smtplib.SMTP_SSL ( mail_server, port )
     # 登录信息
@@ -94,6 +95,9 @@ def sendreport():
     print file_new
     sentmail ( file_new )
 
+
 if __name__ == '__main__':
+    # 调用测试报告
     runAutomation ()
-    sendreport ()
+    # 调用邮件发送
+    # sendreport ()
