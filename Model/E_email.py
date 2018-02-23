@@ -58,7 +58,7 @@ def sentmail(file_new, _mail_from, _mail_to, _pswd, _mail_server, _port):
 def sendreport():
     # 配置信息
     _mail_from = '登录邮箱'
-    _mail_to = '发送邮箱'
+    _mail_to = ['发送邮箱']
     _pswd = '登录密码'
     _mail_server = '邮箱服务器'
     _port = '邮箱端口'
