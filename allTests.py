@@ -99,5 +99,5 @@ def sendreport():
 if __name__ == '__main__':
     # 调用测试报告
     runAutomation ()
-    # 调用邮件发送
+    #调用邮件发送
     # sendreport ()
