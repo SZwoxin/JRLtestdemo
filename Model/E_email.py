@@ -8,17 +8,13 @@ import yagmail
 
 
 # 定义发送邮件
-def sentmail(file_new, _mail_from, _mail_to, _pswd, _mail_server, _port):
-    # 登录邮箱
-    mail_from = _mail_from
-    # 收件邮箱
-    mail_to = _mail_to
-    # 登录授权码
-    pswd = _pswd
-    # 邮箱服务器
-    mail_server = _mail_server
-    # 邮箱端口
-    port = _port
+def sentmail(file_new):
+    # 配置信息
+    _mail_from = '登录邮箱'
+    _mail_to = ['发送邮箱']
+    _pswd = '登录密码'
+    _mail_server = '邮箱服务器'
+    _port = '邮箱端口'
     # 定义正文
     f = open ( file_new, 'rb' )
     mail_body = f.read ()
@@ -31,9 +27,9 @@ def sentmail(file_new, _mail_from, _mail_to, _pswd, _mail_server, _port):
     # 定义发送时间
     msg['date'] = time.strftime ( '%a, %d %b %Y %H:%M:%S %z' )
     # 定义发送人
-    msg['from'] = mail_from
+    msg['from'] = _mail_from
     # 定义接收人
-    msg['to'] = ";".join ( mail_to )
+    msg['to'] = ";".join ( _mail_to )
     # 正文
     body = MIMEText ( mail_body, _subtype='html', _charset='utf-8' )
     msg.attach ( body )
@@ -45,23 +41,17 @@ def sentmail(file_new, _mail_from, _mail_to, _pswd, _mail_server, _port):
     # smtp = smtplib.SMTP ()
     # smtp.connect(mail_server,port)
     # 定义SSL第三方QQ登录方式
-    s = smtplib.SMTP_SSL ( mail_server, port )
+    s = smtplib.SMTP_SSL ( _mail_server, _port )
     # 登录信息
-    s.login ( mail_from, pswd )
+    s.login ( _mail_from, _pswd )
     # 执行发送
-    s.sendmail ( mail_from, mail_to, msg.as_string () )
+    s.sendmail ( _mail_from, _mail_to, msg.as_string () )
     s.quit ()
     print u'邮件发送成功!'
 
 
 # 定义邮件路径与命名
 def sendreport():
-    # 配置信息
-    _mail_from = '登录邮箱'
-    _mail_to = ['发送邮箱']
-    _pswd = '登录密码'
-    _mail_server = '邮箱服务器'
-    _port = '邮箱端口'
     result_dir = 'G:\\caolinlin\\zidonghua\\JRLtestdemo\\Report'
     lists = os.listdir ( result_dir )
     lists.sort ( key=lambda fn: os.path.getmtime ( result_dir + "\\" + fn ) if not os.path.isdir (
@@ -69,4 +59,4 @@ def sendreport():
     print (u'最新测试生成的报告：' + lists[-1])
     file_new = os.path.join ( result_dir, lists[-1] )
     print file_new
-    sentmail ( file_new, _mail_from, _mail_to, _pswd, _mail_server, _port )
+    sentmail ( file_new )
