@@ -12,7 +12,7 @@ from Page.quit import quit
 from Model.logger import Log
 from Page.basetestcase import BaseTestCase, AppTestCase
 
-log = Log ()
+# log = Log ()
 
 filePath = (u'G:\\cll\\zidonghua\\JRLtestdemo\\Data-Driven\\Login_data.xlsx')
 sheetName = "Sheet1"
