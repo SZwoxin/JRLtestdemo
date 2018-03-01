@@ -3,7 +3,7 @@
 
 import logging, time, os
 
-log_path = "G:\\caolinlin\\zidonghua\\JRLtestdemo\\Report"
+log_path = "G:\\cll\\zidonghua\\JRLtestdemo\\Report"
 
 
 class Log:

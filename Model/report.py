@@ -8,7 +8,7 @@ from Model import HTMLTestRunner
 def suite():
     test_dir = os.path.join ( os.getcwd (), "Testcase" )
     # test_dir =path
-    # test_dir ="G:\\caolinlin\\zidonghua\\JRLtestdemo\\Testcase"
+    # test_dir ="G:\\cll\\zidonghua\\JRLtestdemo\\Testcase"
     dir_case = unittest.defaultTestLoader.discover (
         test_dir,
         pattern="test_*.py",
@@ -24,7 +24,7 @@ def getNowTime():
 
 # 定义测试报告存放路径与报告名称
 def runAutomation():
-    filename = u"G:\\caolinlin\\zidonghua\\JRLtestdemo\\Report\\" + getNowTime () + "_TestReort.html"
+    filename = u"G:\\cll\\zidonghua\\JRLtestdemo\\Report\\" + getNowTime () + "_TestReort.html"
     fp = file ( filename, 'wb' )
     runner = HTMLTestRunner.HTMLTestRunner (
         stream=fp,

@@ -12,10 +12,9 @@ from Page.quit import quit
 from Model.logger import Log
 from Page.basetestcase import BaseTestCase, AppTestCase
 
+log = Log ()
 
-# log = Log ()
-
-filePath = (u'G:\\caolinlin\\zidonghua\\JRLtestdemo\\Data-Driven\\Login_data.xlsx')
+filePath = (u'G:\\cll\\zidonghua\\JRLtestdemo\\Data-Driven\\Login_data.xlsx')
 sheetName = "Sheet1"
 data = ExcelUtil ( filePath, sheetName )
 testData = data.dict_data ()

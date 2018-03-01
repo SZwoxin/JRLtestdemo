@@ -37,7 +37,7 @@ class ExcelUtil:
 
 '''
 if __name__ == "__main__":
-    filePath = (u'G:\\caolinlin\\zidonghua\\JRLtestdemo\\Data-Driven\\Login_data.xlsx')
+    filePath = (u'G:\\cll\\zidonghua\\JRLtestdemo\\Data-Driven\\Login_data.xlsx')
     sheetName = "Sheet1"
     data = ExcelUtil ( filePath, sheetName )
     print data.dict_data ()

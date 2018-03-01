@@ -52,7 +52,7 @@ def sentmail(file_new):
 
 # 定义邮件路径与命名
 def sendreport():
-    result_dir = 'G:\\caolinlin\\zidonghua\\JRLtestdemo\\Report'
+    result_dir = 'G:\\cll\\zidonghua\\JRLtestdemo\\Report'
     lists = os.listdir ( result_dir )
     lists.sort ( key=lambda fn: os.path.getmtime ( result_dir + "\\" + fn ) if not os.path.isdir (
         result_dir + "\\" + fn ) else 0 )
