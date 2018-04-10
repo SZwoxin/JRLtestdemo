@@ -36,7 +36,7 @@ def browser(browser='firefox'):
         else:
             print("Not found this browser,You can enter 'firefox', 'chrome', 'ie' or 'phantomjs'")
     except Exception as msg:
-        print "%s" % msg
+        print ( "%s" % msg )
 
 
 """
@@ -74,7 +74,7 @@ class page ( object ):
                locator = ("id","xxx")
                driver.find_element(locator)
                '''
-        element = WebDriverWait ( self.driver, timeout, 1 ).until ( EC.presence_of_element_located ( locator ) )
+        element = WebDriverWait ( self.driver, timeout, 10 ).until ( EC.presence_of_element_located ( locator ) )
         return element
 
     def find_elements(self, locator, timeout=10):
@@ -113,7 +113,7 @@ class page ( object ):
             result = WebDriverWait ( self.driver, timeout, 1 ).until (
                 EC.text_to_be_present_in_element ( locator, text ) )
         except TimeoutException:
-            print "元素没定位到：" + str ( locator )
+            print ( "元素没定位到：" + str ( locator ) )
             return False
         else:
             return result
@@ -127,7 +127,7 @@ class page ( object ):
             result = WebDriverWait ( self.driver, timeout, 1 ).until (
                 EC.text_to_be_present_in_element_value ( locator, value ) )
         except TimeoutException:
-            print "元素没定位到：" + str ( locator )
+            print ( "元素没定位到：" + str ( locator ) )
             return False
         else:
             return result

@@ -4,17 +4,17 @@ import os, time, smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
-import yagmail
+
 
 
 # 定义发送邮件
 def sentmail(file_new):
     # 配置信息
-    _mail_from = '登录邮箱'
-    _mail_to = ['发送邮箱']
-    _pswd = '登录密码'
-    _mail_server = '邮箱服务器'
-    _port = '邮箱端口'
+    _mail_from = 'caolinlin@ruilongjin.com'
+    _mail_to = ['***']
+    _pswd = '***'
+    _mail_server = 'smtp.exmail.qq.com'
+    _port = '465'
     # 定义正文
     f = open ( file_new, 'rb' )
     mail_body = f.read ()
@@ -47,7 +47,7 @@ def sentmail(file_new):
     # 执行发送
     s.sendmail ( _mail_from, _mail_to, msg.as_string () )
     s.quit ()
-    print u'邮件发送成功!'
+    print ( '邮件发送成功!' )
 
 
 # 定义邮件路径与命名
@@ -58,5 +58,5 @@ def sendreport():
         result_dir + "\\" + fn ) else 0 )
     print (u'最新测试生成的报告：' + lists[-1])
     file_new = os.path.join ( result_dir, lists[-1] )
-    print file_new
+    print ( file_new )
     sentmail ( file_new )

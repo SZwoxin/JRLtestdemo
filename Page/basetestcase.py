@@ -2,7 +2,6 @@
 # Aothor:Lin
 
 import unittest
-from appium import webdriver
 from selenium import webdriver
 from Page.BasePage import browser
 

@@ -25,7 +25,7 @@ def getNowTime():
 # 定义测试报告存放路径与报告名称
 def runAutomation():
     filename = u"G:\\cll\\zidonghua\\JRLtestdemo\\Report\\" + getNowTime () + "_TestReort.html"
-    fp = file ( filename, 'wb' )
+    fp = open ( filename, 'wb' )
     runner = HTMLTestRunner.HTMLTestRunner (
         stream=fp,
         title=u"自动化测试报告",

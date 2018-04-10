@@ -1,7 +1,11 @@
 # -*- coding:utf-8 -*-
 # Aothor:Lin
 
+from Page.BasePage import page
 
-def quit(self):
-    driver = self.driver
-    driver.find_element_by_id ( 'login' ).click ()
+
+class QuitPage ( page ):
+    login_loc = ('id', 'login')
+
+    def quit(self):
+        self.click ( self.login_loc )
