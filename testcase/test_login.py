@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 # Aothor:Lin
 import unittest
-import ddt
+import ddt, openpyxl
 from selenium import webdriver
 from Page import basetestcase
 from Page.BasePage import browser
@@ -14,15 +14,16 @@ from Page.basetestcase import BaseTestCase, AppTestCase
 # log = Log ()
 
 filePath = (u'G:\\cll\\zidonghua\\JRLtestdemo\\Data-Driven\\Login_data.xlsx')
+# wb = openpyxl.load_workbook(filePath)
+# sheetName = wb.sheetnames
 sheetName = "Sheet1"
 data = ExcelUtil ( filePath, sheetName )
 testData = data.dict_data ()
 
-
-# print (testData)
+print ( testData)
 
 @ddt.ddt
-class Login ( unittest.TestCase ):
+class Instantiation_login ( unittest.TestCase ):
     @classmethod
     def setUpClass(cls):
         cls.driver = browser ( "chrome" )
@@ -58,4 +59,4 @@ class Login ( unittest.TestCase ):
 
 if __name__ == '__main__':
     testunit = unittest.TestSuite ()
-    testunit.addTest ( unittest.makeSuite ( Login ) )
+    testunit.addTest ( unittest.makeSuite ( Instantiation_login ) )
